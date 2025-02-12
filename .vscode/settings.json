@@ -1,0 +1,25 @@
+{
+    "editor.fontFamily": "Moralerspace Neon HWJPDOC",
+    "editor.tabSize": 4,
+    "editor.fontSize": 22,
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "C_Cpp.formatting": "clangFormat",
+    "editor.defaultFormatter": "xaver.clang-format",
+    "files.associations": {
+        "array": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "*.tcc": "cpp"
+    },
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
+    "C_Cpp.default.browse.path": [
+        "C:\\Users\\yoshi\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\renesas_uno\\1.3.2",
+        "C:\\Users\\yoshi\\Documents\\Arduino\\libraries"
+    ]
+}
