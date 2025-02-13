@@ -9,6 +9,7 @@ static DFRobotDFPlayerMini m_DFPlayer;
 // ローカル変数
 // =======================================================
 static uint8_t m_PlayFolder;
+static uint8_t m_PlayNumber;
 static bool    m_HasModeChanged;
 
 /**
@@ -39,45 +40,33 @@ void Setup_DFPlayer( void )
 
     m_DFPlayer.volume( 30 );  // 0～30中の30に設定
     m_PlayFolder     = 1U;
+    m_PlayNumber     = 1U;
     m_HasModeChanged = false;
 }
 
-void PlayPause( void )
+void DFP_PlayPause( void )
 {
-    if ( m_HasModeChanged == true )
-    {
-        m_DFPlayer.playFolder( m_PlayFolder, 1U );
-    }
-    else
-    {
-        switch ( m_DFPlayer.readState( ) )
-        {
-        case 513U: /* 再生中 */
-            m_DFPlayer.pause( );
-            break;
-        case 514: /* ポーズ中 */
-            m_DFPlayer.play( );
-            break;
-        default:
-            break;
-        }
-    }
+    m_DFPlayer.playFolder( m_PlayFolder, m_PlayNumber );
+    USB_Serial.print( m_PlayFolder );
+    USB_Serial.print( ", " );
+    USB_Serial.print( m_PlayNumber );
+    USB_Serial.println( " Play!" );
 }
 
-void Next( void )
+void DFP_Next( void )
 {
-    m_DFPlayer.next( );
+    m_PlayNumber++;
+    USB_Serial.println( "Next" );
 }
 
-void Prev( void )
+void DFP_Prev( void )
 {
-    m_DFPlayer.previous( );
+    m_PlayNumber--;
+    USB_Serial.println( "Prev" );
 }
 
-void ModeChange( void )
+void DFP_ModeChange( void )
 {
-    m_HasModeChanged = true;
-
     if ( m_PlayFolder == 1U )
     {
         m_PlayFolder = 2U;
@@ -90,4 +79,6 @@ void ModeChange( void )
     {
         m_PlayFolder = 1U;
     }
+    USB_Serial.print( "Mode = " );
+    USB_Serial.println( m_PlayFolder );
 }

@@ -37,11 +37,25 @@ void setup( void )
  */
 void loop( void )
 {
-    // static bool w_HasPushed[ 4 ];
+    static bool w_ButtonPushed[ 4 ];
 
-    // if ( m_NRFRadio.available( ) )
-    // {
-    //     m_NRFRadio.read( &w_HasPushed, sizeof( w_HasPushed ) );
-    // }
-    delay( 2000 );
+    NRF24_ReadMessage( w_ButtonPushed );
+
+    if ( w_ButtonPushed[ 0 ] == true )
+    {
+        DFP_Prev( );
+    }
+    if ( w_ButtonPushed[ 1 ] == true )
+    {
+        DFP_PlayPause( );
+    }
+    if ( w_ButtonPushed[ 2 ] == true )
+    {
+        DFP_Next( );
+    }
+    if ( w_ButtonPushed[ 3 ] == true )
+    {
+        DFP_ModeChange( );
+    }
+    delay( 100 );
 }

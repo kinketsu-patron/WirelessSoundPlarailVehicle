@@ -25,3 +25,11 @@ void Setup_NRF24( void )
     m_NRFRadio.openReadingPipe( 0, m_Address );
     m_NRFRadio.startListening( );
 }
+
+void NRF24_ReadMessage( bool *p_ButtonPushed )
+{
+    if ( m_NRFRadio.available( ) )
+    {
+        m_NRFRadio.read( p_ButtonPushed, sizeof( p_ButtonPushed ) );
+    }
+}

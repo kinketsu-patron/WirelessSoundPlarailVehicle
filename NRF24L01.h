@@ -6,5 +6,6 @@
 #include "define.h"
 
 void Setup_NRF24( void );
+void NRF24_ReadMessage( bool *p_ButtonPushed );
 
 #endif /* NRF24_H */

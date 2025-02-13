@@ -6,9 +6,9 @@
 #include "define.h"
 
 void Setup_DFPlayer( void );
-void PlayPause( void );
-void Next( void );
-void Prev( void );
-void ModeChange( void );
+void DFP_PlayPause( void );
+void DFP_Next( void );
+void DFP_Prev( void );
+void DFP_ModeChange( void );
 
 #endif /* __DFPLAYER_H__ */
