@@ -10,6 +10,7 @@ static DFRobotDFPlayerMini m_DFPlayer;
 // =======================================================
 static uint8_t m_PlayFolder;
 static uint8_t m_PlayNumber;
+static uint8_t m_FileCount[ 3 ] = { 21U, 47U, 3U };
 
 /**
  * =======================================================
@@ -37,30 +38,56 @@ void Setup_DFPlayer( void )
     }
     USB_Serial.println( F( "DFPlayer Mini online." ) );
 
-    m_DFPlayer.volume( 10 );  // 0～30中の30に設定
+    m_DFPlayer.volume( 5 );  // 0～30中の30に設定
     m_PlayFolder = 1U;
     m_PlayNumber = 1U;
 }
 
-void DFP_PlayPause( void )
+void DFP_PlayPause( PinStatus p_BusyLogic )
 {
+    if ( p_BusyLogic == HIGH ) /* 現在再生停止中 */
+    {
+        m_DFPlayer.playFolder( m_PlayFolder, m_PlayNumber );
+        USB_Serial.print( m_PlayFolder );
+        USB_Serial.print( ", " );
+        USB_Serial.print( m_PlayNumber );
+        USB_Serial.println( " Play!" );
+    }
+    else /* 現在再生中 */
+    {
+        m_DFPlayer.pause( );
+        USB_Serial.println( " Stop!" );
+    }
+}
+
+void DFP_Next( void )
+{
+    m_PlayNumber++;
+    if ( m_PlayNumber > m_FileCount[ m_PlayFolder - 1U ] )
+    {
+        m_PlayNumber = 1U;
+    }
     m_DFPlayer.playFolder( m_PlayFolder, m_PlayNumber );
+
     USB_Serial.print( m_PlayFolder );
     USB_Serial.print( ", " );
     USB_Serial.print( m_PlayNumber );
     USB_Serial.println( " Play!" );
 }
 
-void DFP_Next( void )
-{
-    m_PlayNumber++;
-    USB_Serial.println( "Next" );
-}
-
 void DFP_Prev( void )
 {
     m_PlayNumber--;
-    USB_Serial.println( "Prev" );
+    if ( m_PlayNumber < 1U )
+    {
+        m_PlayNumber = m_FileCount[ m_PlayFolder - 1U ];
+    }
+    m_DFPlayer.playFolder( m_PlayFolder, m_PlayNumber );
+
+    USB_Serial.print( m_PlayFolder );
+    USB_Serial.print( ", " );
+    USB_Serial.print( m_PlayNumber );
+    USB_Serial.println( " Play!" );
 }
 
 void DFP_ModeChange( void )
@@ -71,12 +98,14 @@ void DFP_ModeChange( void )
     }
     else if ( m_PlayFolder == 2U )
     {
-        m_PlayFolder = 99U;
+        m_PlayFolder = 3U;
     }
     else
     {
         m_PlayFolder = 1U;
     }
+    m_PlayNumber = 1U;
+
     USB_Serial.print( "Mode = " );
     USB_Serial.println( m_PlayFolder );
 }

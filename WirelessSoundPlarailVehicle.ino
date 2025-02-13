@@ -23,6 +23,7 @@
  */
 void setup( void )
 {
+    pinMode( BUSY_PIN_NO, INPUT );
     Setup_DFPlayer( );
     Setup_NRF24( );
     USB_Serial.begin( 115200 );  // USBデータ通信の通信速度
@@ -47,7 +48,7 @@ void loop( void )
             DFP_Prev( );
             break;
         case PLAY_ID:
-            DFP_PlayPause( );
+            DFP_PlayPause( digitalRead( BUSY_PIN_NO ) );
             break;
         case NEXT_ID:
             DFP_Next( );

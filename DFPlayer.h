@@ -6,7 +6,7 @@
 #include "define.h"
 
 void Setup_DFPlayer( void );
-void DFP_PlayPause( void );
+void DFP_PlayPause( PinStatus p_BusyLogic );
 void DFP_Next( void );
 void DFP_Prev( void );
 void DFP_ModeChange( void );

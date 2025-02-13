@@ -3,8 +3,10 @@
 
 #define USB_Serial Serial
 #define DF_Serial  Serial1
-#define CE_PIN_NO  D7
-#define CSN_PIN_NO D8
+
+#define CE_PIN_NO   D7
+#define CSN_PIN_NO  D8
+#define BUSY_PIN_NO D9
 
 #define PREV_ID 1U
 #define PLAY_ID 2U
