@@ -43,7 +43,7 @@ ColumnLimit: 120
 IncludeBlocks: Preserve
 
 # swicth分のcaseにインデントを設定する
-IndentCaseLabels: false
+IndentCaseLabels: true
 
 # インデント
 IndentWidth: 4

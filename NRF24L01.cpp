@@ -3,13 +3,20 @@
 // =======================================================
 // オブジェクト
 // =======================================================
-static RF24 m_NRFRadio( CE_PIN, CSN_PIN );
+static RF24 m_NRFRadio( CE_PIN_NO, CSN_PIN_NO );
 
 // =======================================================
 // メンバ変数
 // =======================================================
 static const byte m_Address[ 6 ] = "NODE1";
 
+/**
+ * =======================================================
+ * @fn          Setup_NRF24
+ * @brief       初期化
+ * @date        2025-02-13
+ * =======================================================
+ */
 void Setup_NRF24( void )
 {
     if ( m_NRFRadio.begin( ) == 0 )
@@ -26,10 +33,20 @@ void Setup_NRF24( void )
     m_NRFRadio.startListening( );
 }
 
-void NRF24_ReadMessage( bool *p_ButtonPushed )
+/**
+ * =======================================================
+ * @fn          NRF24_ReadMessage
+ * @brief       無線でのメッセージ受信
+ * @date        2025-02-13
+ * =======================================================
+ */
+uint8_t NRF24_ReadMessage( void )
 {
-    if ( m_NRFRadio.available( ) )
+    uint8_t w_PushedID = 0U;
+
+    while ( m_NRFRadio.available( ) )
     {
-        m_NRFRadio.read( p_ButtonPushed, sizeof( p_ButtonPushed ) );
+        m_NRFRadio.read( &w_PushedID, sizeof( w_PushedID ) );
     }
+    return w_PushedID;
 }

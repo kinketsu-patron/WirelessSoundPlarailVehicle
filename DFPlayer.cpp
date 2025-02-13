@@ -10,7 +10,6 @@ static DFRobotDFPlayerMini m_DFPlayer;
 // =======================================================
 static uint8_t m_PlayFolder;
 static uint8_t m_PlayNumber;
-static bool    m_HasModeChanged;
 
 /**
  * =======================================================
@@ -38,10 +37,9 @@ void Setup_DFPlayer( void )
     }
     USB_Serial.println( F( "DFPlayer Mini online." ) );
 
-    m_DFPlayer.volume( 30 );  // 0～30中の30に設定
-    m_PlayFolder     = 1U;
-    m_PlayNumber     = 1U;
-    m_HasModeChanged = false;
+    m_DFPlayer.volume( 10 );  // 0～30中の30に設定
+    m_PlayFolder = 1U;
+    m_PlayNumber = 1U;
 }
 
 void DFP_PlayPause( void )

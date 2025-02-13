@@ -23,9 +23,9 @@
  */
 void setup( void )
 {
-    USB_Serial.begin( 115200 );  // USBデータ通信の通信速度
     Setup_DFPlayer( );
     Setup_NRF24( );
+    USB_Serial.begin( 115200 );  // USBデータ通信の通信速度
 }
 
 /**
@@ -37,25 +37,26 @@ void setup( void )
  */
 void loop( void )
 {
-    static bool w_ButtonPushed[ 4 ];
+    static uint8_t w_PushedID;
 
-    NRF24_ReadMessage( w_ButtonPushed );
+    w_PushedID = NRF24_ReadMessage( );
 
-    if ( w_ButtonPushed[ 0 ] == true )
+    switch ( w_PushedID )
     {
-        DFP_Prev( );
+        case PREV_ID:
+            DFP_Prev( );
+            break;
+        case PLAY_ID:
+            DFP_PlayPause( );
+            break;
+        case NEXT_ID:
+            DFP_Next( );
+            break;
+        case MODE_ID:
+            DFP_ModeChange( );
+            break;
+        default:
+            break;
     }
-    if ( w_ButtonPushed[ 1 ] == true )
-    {
-        DFP_PlayPause( );
-    }
-    if ( w_ButtonPushed[ 2 ] == true )
-    {
-        DFP_Next( );
-    }
-    if ( w_ButtonPushed[ 3 ] == true )
-    {
-        DFP_ModeChange( );
-    }
-    delay( 100 );
+    delay( 50 );
 }
