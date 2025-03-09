@@ -57,11 +57,10 @@ void loop( void )
         case MODE_ID:
             DFP_ModeChange( );
             break;
-        default:
+        default: /* NONE */
             break;
     }
-
-    NRF24_WriteMessage( w_PushedID, DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ),
-                        ( uint8_t )digitalRead( BUSY_PIN_NO ) );
+    DFP_UpdatePlayStatus( digitalRead( BUSY_PIN_NO ) );
+    NRF24_WriteMessage( DFP_GetPlayStatus( ), DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ) );
     delay( 100 );
 }

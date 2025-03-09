@@ -10,6 +10,7 @@ static DFRobotDFPlayerMini m_DFPlayer;
 // =======================================================
 static uint8_t m_PlayFolder;
 static uint8_t m_PlayTruckNo;
+static uint8_t m_PlayStatus;
 static uint8_t m_FileCount[ 3 ] = { 21U, 47U, 3U };
 
 /**
@@ -41,12 +42,14 @@ void Setup_DFPlayer( void )
     m_DFPlayer.volume( 10 );  // 0～30中の30に設定
     m_PlayFolder  = 1U;
     m_PlayTruckNo = 1U;
+    m_PlayStatus  = NONE;
 }
 
 void DFP_PlayPause( PinStatus p_BusyLogic )
 {
     if ( p_BusyLogic == HIGH ) /* 現在再生停止中 */
     {
+        m_PlayStatus = IN_PLAY;
         m_DFPlayer.playFolder( m_PlayFolder, m_PlayTruckNo );
         USB_Serial.print( m_PlayFolder );
         USB_Serial.print( ", " );
@@ -55,6 +58,7 @@ void DFP_PlayPause( PinStatus p_BusyLogic )
     }
     else /* 現在再生中 */
     {
+        m_PlayStatus = IN_PAUSE;
         m_DFPlayer.pause( );
         USB_Serial.println( " Stop!" );
     }
@@ -67,6 +71,7 @@ void DFP_Next( void )
     {
         m_PlayTruckNo = 1U;
     }
+    m_PlayStatus = IN_NEXT;
     m_DFPlayer.playFolder( m_PlayFolder, m_PlayTruckNo );
 
     USB_Serial.print( m_PlayFolder );
@@ -82,6 +87,7 @@ void DFP_Prev( void )
     {
         m_PlayTruckNo = m_FileCount[ m_PlayFolder - 1U ];
     }
+    m_PlayStatus = IN_PREV;
     m_DFPlayer.playFolder( m_PlayFolder, m_PlayTruckNo );
 
     USB_Serial.print( m_PlayFolder );
@@ -118,4 +124,17 @@ uint8_t DFP_GetPlayTruckNo( void )
 uint8_t DFP_GetPlayFolder( void )
 {
     return m_PlayFolder;
+}
+
+uint8_t DFP_GetPlayStatus( void )
+{
+    return m_PlayStatus;
+}
+
+void DFP_UpdatePlayStatus( PinStatus p_BusyLogic )
+{
+    if ( p_BusyLogic == LOW )
+    {
+        m_PlayStatus = NONE;
+    }
 }

@@ -37,7 +37,7 @@ void Setup_NRF24( void )
  */
 uint8_t NRF24_ReadMessage( void )
 {
-    uint8_t w_PushedID = 0U;
+    uint8_t w_PushedID = NONE;
 
     m_NRFRadio.startListening( );
 
@@ -48,14 +48,13 @@ uint8_t NRF24_ReadMessage( void )
     return w_PushedID;
 }
 
-void NRF24_WriteMessage( uint8_t p_PushedID, uint8_t p_TruckNo, uint8_t p_PlayFolder, uint8_t p_PinStatus )
+void NRF24_WriteMessage( uint8_t p_PlayStatus, uint8_t p_TruckNo, uint8_t p_PlayFolder )
 {
     MSG w_Message;
 
     m_NRFRadio.stopListening( );
-    w_Message.PushedID   = p_PushedID;
+    w_Message.PlayStatus = p_PlayStatus;
     w_Message.TruckNo    = p_TruckNo;
     w_Message.PlayFolder = p_PlayFolder;
-    w_Message.PinStatus  = p_PinStatus;
     m_NRFRadio.write( &w_Message, sizeof( w_Message ) );
 }

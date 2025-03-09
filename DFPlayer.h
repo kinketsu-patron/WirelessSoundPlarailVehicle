@@ -12,5 +12,7 @@ void    DFP_Prev( void );
 void    DFP_ModeChange( void );
 uint8_t DFP_GetPlayTruckNo( void );
 uint8_t DFP_GetPlayFolder( void );
+uint8_t DFP_GetPlayStatus( void );
+void    DFP_UpdatePlayStatus( void );
 
 #endif /* __DFPLAYER_H__ */

@@ -8,9 +8,15 @@
 #define CSN_PIN_NO  D8
 #define BUSY_PIN_NO D9
 
+#define NONE    0U
 #define PREV_ID 1U
 #define PLAY_ID 2U
 #define NEXT_ID 3U
 #define MODE_ID 4U
+
+#define IN_PREV  1U
+#define IN_PLAY  2U
+#define IN_NEXT  3U
+#define IN_PAUSE 4U
 
 #endif
