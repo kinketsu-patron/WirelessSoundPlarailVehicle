@@ -61,6 +61,7 @@ void loop( void )
             break;
     }
     DFP_UpdatePlayStatus( digitalRead( BUSY_PIN_NO ) );
+    delay( 5 );
     NRF24_WriteMessage( DFP_GetPlayStatus( ), DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ) );
-    delay( 100 );
+    delay( 5 );
 }
