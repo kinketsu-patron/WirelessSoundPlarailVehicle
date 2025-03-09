@@ -5,12 +5,6 @@
 // =======================================================
 static RF24 m_NRFRadio( CE_PIN_NO, CSN_PIN_NO );
 
-// =======================================================
-// メンバ変数
-// =======================================================
-static const byte m_ReceiveAddress[ 6 ] = "NODE1";
-static const byte m_SendAddress[ 6 ]    = "NODE2";
-
 /**
  * =======================================================
  * @fn          Setup_NRF24
@@ -30,8 +24,8 @@ void Setup_NRF24( void )
     }
 
     m_NRFRadio.setPALevel( RF24_PA_MIN );
-    m_NRFRadio.openWritingPipe( m_SendAddress );
-    m_NRFRadio.openReadingPipe( 0, m_ReceiveAddress );
+    m_NRFRadio.openWritingPipe( "TOCTL" );
+    m_NRFRadio.openReadingPipe( 0, "TOTRN" );
 }
 
 /**
@@ -54,7 +48,14 @@ uint8_t NRF24_ReadMessage( void )
     return w_PushedID;
 }
 
-void NRF24_WriteMessage( )
+void NRF24_WriteMessage( uint8_t p_PushedID, uint8_t p_TruckNo, uint8_t p_PlayFolder, uint8_t p_PinStatus )
 {
+    MSG w_Message;
+
     m_NRFRadio.stopListening( );
+    w_Message.PushedID   = p_PushedID;
+    w_Message.TruckNo    = p_TruckNo;
+    w_Message.PlayFolder = p_PlayFolder;
+    w_Message.PinStatus  = p_PinStatus;
+    m_NRFRadio.write( &w_Message, sizeof( w_Message ) );
 }

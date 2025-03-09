@@ -13,6 +13,7 @@
 // =======================================================
 #include "DFPlayer.h"
 #include "NRF24L01.h"
+#include <Arduino.h>
 
 /**
  * =======================================================
@@ -59,5 +60,8 @@ void loop( void )
         default:
             break;
     }
-    delay( 50 );
+
+    NRF24_WriteMessage( w_PushedID, DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ),
+                        ( uint8_t )digitalRead( BUSY_PIN_NO ) );
+    delay( 100 );
 }

@@ -9,7 +9,7 @@ static DFRobotDFPlayerMini m_DFPlayer;
 // ローカル変数
 // =======================================================
 static uint8_t m_PlayFolder;
-static uint8_t m_PlayNumber;
+static uint8_t m_PlayTruckNo;
 static uint8_t m_FileCount[ 3 ] = { 21U, 47U, 3U };
 
 /**
@@ -39,18 +39,18 @@ void Setup_DFPlayer( void )
     USB_Serial.println( F( "DFPlayer Mini online." ) );
 
     m_DFPlayer.volume( 10 );  // 0～30中の30に設定
-    m_PlayFolder = 1U;
-    m_PlayNumber = 1U;
+    m_PlayFolder  = 1U;
+    m_PlayTruckNo = 1U;
 }
 
 void DFP_PlayPause( PinStatus p_BusyLogic )
 {
     if ( p_BusyLogic == HIGH ) /* 現在再生停止中 */
     {
-        m_DFPlayer.playFolder( m_PlayFolder, m_PlayNumber );
+        m_DFPlayer.playFolder( m_PlayFolder, m_PlayTruckNo );
         USB_Serial.print( m_PlayFolder );
         USB_Serial.print( ", " );
-        USB_Serial.print( m_PlayNumber );
+        USB_Serial.print( m_PlayTruckNo );
         USB_Serial.println( " Play!" );
     }
     else /* 現在再生中 */
@@ -62,31 +62,31 @@ void DFP_PlayPause( PinStatus p_BusyLogic )
 
 void DFP_Next( void )
 {
-    m_PlayNumber++;
-    if ( m_PlayNumber > m_FileCount[ m_PlayFolder - 1U ] )
+    m_PlayTruckNo++;
+    if ( m_PlayTruckNo > m_FileCount[ m_PlayFolder - 1U ] )
     {
-        m_PlayNumber = 1U;
+        m_PlayTruckNo = 1U;
     }
-    m_DFPlayer.playFolder( m_PlayFolder, m_PlayNumber );
+    m_DFPlayer.playFolder( m_PlayFolder, m_PlayTruckNo );
 
     USB_Serial.print( m_PlayFolder );
     USB_Serial.print( ", " );
-    USB_Serial.print( m_PlayNumber );
+    USB_Serial.print( m_PlayTruckNo );
     USB_Serial.println( " Play!" );
 }
 
 void DFP_Prev( void )
 {
-    m_PlayNumber--;
-    if ( m_PlayNumber < 1U )
+    m_PlayTruckNo--;
+    if ( m_PlayTruckNo < 1U )
     {
-        m_PlayNumber = m_FileCount[ m_PlayFolder - 1U ];
+        m_PlayTruckNo = m_FileCount[ m_PlayFolder - 1U ];
     }
-    m_DFPlayer.playFolder( m_PlayFolder, m_PlayNumber );
+    m_DFPlayer.playFolder( m_PlayFolder, m_PlayTruckNo );
 
     USB_Serial.print( m_PlayFolder );
     USB_Serial.print( ", " );
-    USB_Serial.print( m_PlayNumber );
+    USB_Serial.print( m_PlayTruckNo );
     USB_Serial.println( " Play!" );
 }
 
@@ -104,8 +104,18 @@ void DFP_ModeChange( void )
     {
         m_PlayFolder = 1U;
     }
-    m_PlayNumber = 1U;
+    m_PlayTruckNo = 1U;
 
     USB_Serial.print( "Mode = " );
     USB_Serial.println( m_PlayFolder );
+}
+
+uint8_t DFP_GetPlayTruckNo( void )
+{
+    return m_PlayTruckNo;
+}
+
+uint8_t DFP_GetPlayFolder( void )
+{
+    return m_PlayFolder;
 }
