@@ -38,7 +38,7 @@ void Setup_DFPlayer( void )
     }
     USB_Serial.println( F( "DFPlayer Mini online." ) );
 
-    m_DFPlayer.volume( 5 );  // 0～30中の30に設定
+    m_DFPlayer.volume( 10 );  // 0～30中の30に設定
     m_PlayFolder = 1U;
     m_PlayNumber = 1U;
 }
