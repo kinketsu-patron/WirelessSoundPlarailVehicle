@@ -5,6 +5,9 @@
 // =======================================================
 static RF24 m_NRFRadio( CE_PIN_NO, CSN_PIN_NO );
 
+const byte m_Address_ToTrain[ 6 ]      = { "TOTRN" };
+const byte m_Address_ToController[ 6 ] = { "TOCTL" };
+
 /**
  * =======================================================
  * @fn          Setup_NRF24
@@ -24,8 +27,8 @@ void Setup_NRF24( void )
     }
 
     m_NRFRadio.setPALevel( RF24_PA_MIN );
-    m_NRFRadio.openWritingPipe( "TOCTL" );
-    m_NRFRadio.openReadingPipe( 0, "TOTRN" );
+    m_NRFRadio.openWritingPipe( m_Address_ToController );
+    m_NRFRadio.openReadingPipe( 0, m_Address_ToTrain );
 }
 
 /**
