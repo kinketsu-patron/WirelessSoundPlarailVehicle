@@ -57,16 +57,8 @@ void NRF24_WriteMessage( uint8_t p_PlayStatus, uint8_t p_TruckNo, uint8_t p_Play
     uint8_t   w_PlayStatus;
 
     m_NRFRadio.stopListening( );
-    w_PlayStatus         = p_PlayStatus;
     w_Message.PlayStatus = p_PlayStatus;
     w_Message.TruckNo    = p_TruckNo;
     w_Message.PlayFolder = p_PlayFolder;
-    USB_Serial.print( "PlayStatus =" );
-    USB_Serial.println( p_PlayStatus );
-    USB_Serial.print( "TruckNo =" );
-    USB_Serial.println( p_TruckNo );
-    USB_Serial.print( "PlayFolder =" );
-    USB_Serial.println( p_PlayFolder );
-    //m_NRFRadio.write( &w_Message, sizeof( SoundData ) );
-    m_NRFRadio.write( &w_PlayStatus, sizeof( uint8_t ) );
+    m_NRFRadio.write( &w_Message, sizeof( SoundData ) );
 }

@@ -41,8 +41,8 @@ void loop( void )
 {
     uint8_t w_PushedID;
 
-    delay( 200 );
-    //w_PushedID = NRF24_ReadMessage( );
+    delay( 10 );
+    w_PushedID = NRF24_ReadMessage( );
     switch ( w_PushedID )
     {
         case PREV_ID:
@@ -62,7 +62,5 @@ void loop( void )
     }
     delay( 200 );
     DFP_UpdatePlayStatus( digitalRead( BUSY_PIN_NO ) );
-    delay( 200 );
-    //NRF24_WriteMessage( DFP_GetPlayStatus( ), DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ) );
-    NRF24_WriteMessage( 1U, DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ) );
+    NRF24_WriteMessage( DFP_GetPlayStatus( ), DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ) );
 }
