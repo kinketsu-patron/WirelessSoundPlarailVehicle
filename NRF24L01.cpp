@@ -28,7 +28,7 @@ void Setup_NRF24( void )
 
     m_NRFRadio.setPALevel( RF24_PA_MIN );
     m_NRFRadio.openWritingPipe( m_Address_ToController );
-    m_NRFRadio.openReadingPipe( 0, m_Address_ToTrain );
+    m_NRFRadio.openReadingPipe( 1, m_Address_ToTrain );
 }
 
 /**
@@ -44,20 +44,29 @@ uint8_t NRF24_ReadMessage( void )
 
     m_NRFRadio.startListening( );
 
-    while ( m_NRFRadio.available( ) )
+    if ( m_NRFRadio.available( ) )
     {
-        m_NRFRadio.read( &w_PushedID, sizeof( w_PushedID ) );
+        m_NRFRadio.read( &w_PushedID, sizeof( uint8_t ) );
     }
     return w_PushedID;
 }
 
 void NRF24_WriteMessage( uint8_t p_PlayStatus, uint8_t p_TruckNo, uint8_t p_PlayFolder )
 {
-    MSG w_Message;
+    SoundData w_Message;
+    uint8_t   w_PlayStatus;
 
     m_NRFRadio.stopListening( );
+    w_PlayStatus         = p_PlayStatus;
     w_Message.PlayStatus = p_PlayStatus;
     w_Message.TruckNo    = p_TruckNo;
     w_Message.PlayFolder = p_PlayFolder;
-    m_NRFRadio.write( &w_Message, sizeof( w_Message ) );
+    USB_Serial.print( "PlayStatus =" );
+    USB_Serial.println( p_PlayStatus );
+    USB_Serial.print( "TruckNo =" );
+    USB_Serial.println( p_TruckNo );
+    USB_Serial.print( "PlayFolder =" );
+    USB_Serial.println( p_PlayFolder );
+    //m_NRFRadio.write( &w_Message, sizeof( SoundData ) );
+    m_NRFRadio.write( &w_PlayStatus, sizeof( uint8_t ) );
 }

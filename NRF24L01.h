@@ -4,13 +4,16 @@
 #include "Arduino.h"
 #include "RF24.h"
 #include "define.h"
+#include "nRF24L01.h"
+#include <SPI.h>
 
-typedef struct
+
+struct SoundData
 {
     uint8_t PlayStatus;
     uint8_t TruckNo;
     uint8_t PlayFolder;
-} MSG;
+};
 
 void    Setup_NRF24( void );
 uint8_t NRF24_ReadMessage( void );

@@ -39,10 +39,10 @@ void Setup_DFPlayer( void )
     }
     USB_Serial.println( F( "DFPlayer Mini online." ) );
 
-    m_DFPlayer.volume( 20 );  // 0～30中の30に設定
+    m_DFPlayer.volume( 5 );  // 0～30中の30に設定
     m_PlayFolder  = 1U;
     m_PlayTruckNo = 1U;
-    m_PlayStatus  = NONE;
+    m_PlayStatus  = STOP;
 }
 
 void DFP_PlayPause( PinStatus p_BusyLogic )
@@ -58,8 +58,8 @@ void DFP_PlayPause( PinStatus p_BusyLogic )
     }
     else /* 現在再生中 */
     {
-        m_PlayStatus = IN_PAUSE;
-        m_DFPlayer.pause( );
+        m_PlayStatus = STOP;
+        m_DFPlayer.stop( );
         USB_Serial.println( " Stop!" );
     }
 }
@@ -133,8 +133,8 @@ uint8_t DFP_GetPlayStatus( void )
 
 void DFP_UpdatePlayStatus( PinStatus p_BusyLogic )
 {
-    if ( p_BusyLogic == LOW )
+    if ( p_BusyLogic == HIGH )
     {
-        m_PlayStatus = NONE;
+        m_PlayStatus = STOP;
     }
 }
