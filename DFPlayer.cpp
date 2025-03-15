@@ -11,7 +11,7 @@ static DFRobotDFPlayerMini m_DFPlayer;
 static uint8_t m_PlayFolder;
 static uint8_t m_PlayTruckNo;
 static uint8_t m_PlayStatus;
-static uint8_t m_FileCount[ 3 ] = { 21U, 47U, 3U };
+static uint8_t m_FileCount[ 2 ] = { 21U, 20U };
 
 /**
  * =======================================================
@@ -101,10 +101,6 @@ void DFP_ModeChange( void )
     if ( m_PlayFolder == 1U )
     {
         m_PlayFolder = 2U;
-    }
-    else if ( m_PlayFolder == 2U )
-    {
-        m_PlayFolder = 3U;
     }
     else
     {
