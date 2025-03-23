@@ -25,10 +25,10 @@
 void setup( void )
 {
     USB_Serial.begin( 9600 );  // USBデータ通信の通信速度
-    while ( !USB_Serial )
-    {
-        // some boards need to wait to ensure access to serial over USB
-    }
+    // while ( !USB_Serial )
+    // {
+    //     // some boards need to wait to ensure access to serial over USB
+    // }
     pinMode( BUSY_PIN_NO, INPUT_PULLUP );
     Setup_DFPlayer( );
     Setup_NRF24( );
