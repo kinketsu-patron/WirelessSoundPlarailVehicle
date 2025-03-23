@@ -7,16 +7,15 @@
 #include "nRF24L01.h"
 #include <SPI.h>
 
-
-struct SoundData
+typedef struct
 {
     uint8_t PlayStatus;
     uint8_t TruckNo;
     uint8_t PlayFolder;
-};
+} SOUNDDATA;
 
-void    Setup_NRF24( void );
-uint8_t NRF24_ReadMessage( void );
-void    NRF24_WriteMessage( uint8_t p_PlayStatus, uint8_t p_TruckNo, uint8_t p_PlayFolder );
+void Setup_NRF24( void );
+bool NRF24_ReadMessage( uint8_t *p_PushedID );
+void NRF24_WriteMessage( uint8_t p_PlayStatus, uint8_t p_TruckNo, uint8_t p_PlayFolder );
 
 #endif /* NRF24_H */

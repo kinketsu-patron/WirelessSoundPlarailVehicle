@@ -24,8 +24,12 @@
  */
 void setup( void )
 {
-    USB_Serial.begin( 115200 );  // USBデータ通信の通信速度
-    pinMode( BUSY_PIN_NO, INPUT );
+    USB_Serial.begin( 9600 );  // USBデータ通信の通信速度
+    while ( !USB_Serial )
+    {
+        // some boards need to wait to ensure access to serial over USB
+    }
+    pinMode( BUSY_PIN_NO, INPUT_PULLUP );
     Setup_DFPlayer( );
     Setup_NRF24( );
 }
@@ -40,27 +44,37 @@ void setup( void )
 void loop( void )
 {
     uint8_t w_PushedID;
+    bool    w_IsRecv;
 
-    delay( 10 );
-    w_PushedID = NRF24_ReadMessage( );
-    switch ( w_PushedID )
+    delay( 50 );
+    USB_Serial.println( "beforeReceived!" );
+    w_IsRecv = NRF24_ReadMessage( &w_PushedID );
+    USB_Serial.println( "Received!" );
+    if ( w_IsRecv == true )
     {
-        case PREV_ID:
-            DFP_Prev( );
-            break;
-        case PLAY_ID:
-            DFP_PlayPause( digitalRead( BUSY_PIN_NO ) );
-            break;
-        case NEXT_ID:
-            DFP_Next( );
-            break;
-        case MODE_ID:
-            DFP_ModeChange( );
-            break;
-        default: /* NONE */
-            break;
+        switch ( w_PushedID )
+        {
+            case PREV_ID:
+                DFP_Prev( );
+                break;
+            case PLAY_ID:
+                DFP_PlayPause( digitalRead( BUSY_PIN_NO ) );
+                break;
+            case NEXT_ID:
+                DFP_Next( );
+                break;
+            case MODE_ID:
+                DFP_ModeChange( );
+                break;
+            default: /* NONE */
+                break;
+        }
     }
-    delay( 200 );
+    else
+    {
+        USB_Serial.println( "No Received." );
+    }
+    delay( 1000 );
     DFP_UpdatePlayStatus( digitalRead( BUSY_PIN_NO ) );
     NRF24_WriteMessage( DFP_GetPlayStatus( ), DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ) );
 }
