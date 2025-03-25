@@ -26,7 +26,7 @@ void Setup_NRF24( void )
         }
     }
     m_NRFRadio.setPALevel( RF24_PA_LOW );
-    //m_NRFRadio.setPayloadSize( sizeof( SOUNDDATA ) );
+    m_NRFRadio.setPayloadSize( 3U /* bytes */ );
     m_NRFRadio.openWritingPipe( m_Address_ToController );
     m_NRFRadio.openReadingPipe( 1, m_Address_ToTrain );
 }
@@ -46,7 +46,7 @@ bool NRF24_ReadMessage( uint8_t *p_PushedID )
 
     *p_PushedID = NONE;
     m_NRFRadio.startListening( );
-    if ( m_NRFRadio.available( &w_Pipe ) )
+    while ( m_NRFRadio.available( &w_Pipe ) )
     {
         w_Bytes = m_NRFRadio.getPayloadSize( );  // get the size of the payload
         m_NRFRadio.read( p_PushedID, sizeof( uint8_t ) );

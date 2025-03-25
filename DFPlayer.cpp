@@ -23,7 +23,6 @@ static uint8_t m_FileCount[ 2 ] = { 21U, 20U };
 void Setup_DFPlayer( void )
 {
     DF_Serial.begin( 9600 );  // DFPlayer miniとの通信速度(仕様制約)
-
     // 2秒以内に初期化できなかった場合はエラーメッセージが表示される
     if ( m_DFPlayer.begin( DF_Serial, /*isACK = */ true, /*doReset = */ true ) == 0 )
     {
@@ -45,7 +44,7 @@ void Setup_DFPlayer( void )
     m_PlayStatus  = STOP;
 }
 
-void DFP_PlayPause( PinStatus p_BusyLogic )
+void DFP_PlayPause( uint8_t p_BusyLogic )
 {
     if ( p_BusyLogic == HIGH ) /* 現在再生停止中 */
     {
@@ -127,7 +126,7 @@ uint8_t DFP_GetPlayStatus( void )
     return m_PlayStatus;
 }
 
-void DFP_UpdatePlayStatus( PinStatus p_BusyLogic )
+void DFP_UpdatePlayStatus( uint8_t p_BusyLogic )
 {
     if ( p_BusyLogic == HIGH )
     {
