@@ -42,7 +42,7 @@ void loop( void )
     uint8_t w_PushedID;
     bool    w_IsRecv;
 
-    delay( 500 );
+    delay( 300 );
     w_IsRecv = NRF24_ReadMessage( &w_PushedID );
     if ( w_IsRecv == true )
     {
@@ -68,7 +68,7 @@ void loop( void )
     {
         USB_Serial.println( "No Received." );
     }
-    delay( 500 );
+    delay( 300 );
     DFP_UpdatePlayStatus( digitalRead( BUSY_PIN_NO ) );
     NRF24_WriteMessage( DFP_GetPlayStatus( ), DFP_GetPlayTruckNo( ), DFP_GetPlayFolder( ) );
 }

@@ -27,6 +27,7 @@ void Setup_NRF24( void )
     }
     m_NRFRadio.setPALevel( RF24_PA_LOW );
     m_NRFRadio.setPayloadSize( 3U /* bytes */ );
+    m_NRFRadio.setRetries( 15, 15 );
     m_NRFRadio.openWritingPipe( m_Address_ToController );
     m_NRFRadio.openReadingPipe( 1, m_Address_ToTrain );
 }
@@ -54,8 +55,6 @@ bool NRF24_ReadMessage( uint8_t *p_PushedID )
         USB_Serial.print( w_Bytes );  // print the size of the payload
         USB_Serial.print( F( " bytes on pipe " ) );
         USB_Serial.println( w_Pipe );  // print the pipe number
-        // USB_Serial.print( F( ": " ) );
-        // USB_Serial.println( payload );  // print the payload's value
         w_Result = true;
     }
     return w_Result;
