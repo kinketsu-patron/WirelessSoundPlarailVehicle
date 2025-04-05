@@ -25,6 +25,10 @@ void Setup_NRF24( void )
             delay( 0 );
         }
     }
+    else
+    {
+        USB_Serial.println( F( "nRF24L01 online." ) );
+    }
     m_NRFRadio.setPALevel( RF24_PA_LOW );
     m_NRFRadio.setPayloadSize( 3U /* bytes */ );
     m_NRFRadio.setRetries( 15, 15 );

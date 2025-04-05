@@ -26,8 +26,8 @@ void setup( void )
 {
     USB_Serial.begin( 115200 );  // USBデータ通信の通信速度
     pinMode( BUSY_PIN_NO, INPUT_PULLUP );
-    Setup_DFPlayer( );
     Setup_NRF24( );
+    Setup_DFPlayer( );
 }
 
 /**
