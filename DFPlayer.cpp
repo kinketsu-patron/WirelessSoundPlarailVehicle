@@ -24,7 +24,7 @@ void Setup_DFPlayer( void )
 {
     DF_Serial.begin( 9600 );  // DFPlayer miniとの通信速度(仕様制約)
     // 2秒以内に初期化できなかった場合はエラーメッセージが表示される
-    if ( m_DFPlayer.begin( DF_Serial, /*isACK = */ true, /*doReset = */ true ) == 0 )
+    if ( m_DFPlayer.begin( DF_Serial, true, true ) == 0 )
     {
         USB_Serial.println( F( "Unable to begin:" ) );
         USB_Serial.println( F( "1.Please recheck the connection!" ) );
